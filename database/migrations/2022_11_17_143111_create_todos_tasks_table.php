@@ -22,7 +22,7 @@ class CreateTodosTasksTable extends Migration
                 ->onDelete('CASCADE')
                 ->onUpdate('CASCADE');
             $table->string('label');
-            $table->boolean('is_complete')->default('false');
+            $table->boolean('is_complete')->default(false);
             $table->timestamps();
         });
     }
