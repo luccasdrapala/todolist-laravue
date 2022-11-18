@@ -22,5 +22,6 @@ class AuthController extends Controller
         $token = $this->authService->login_user($input['email'], $input['password']);
         
         return (new UserResource(auth()->user()))->additional($token);
+        //retorna o UserResource e o token
     }
 }

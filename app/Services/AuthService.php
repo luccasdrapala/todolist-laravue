@@ -15,7 +15,7 @@ class AuthService{
 
         if(!$token = auth()->attempt($login)){ //responsável por logar o usuário 
             
-            throw new LoginInvalidException('teste da message ');
+            throw new LoginInvalidException();
         }
 
         return [
@@ -23,6 +23,5 @@ class AuthService{
             'token_type' => 'Bearer',
         ];
 
-        dd('Auth Service acessado com sucesso');
     }
 }
