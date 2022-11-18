@@ -15,8 +15,8 @@ class TodoSeeder extends Seeder
     public function run()
     {
         User::all()->each(function($user){                //para cada funcionario cria 10 todos //each é um loop
-            $user->todos()->saveMany(factory(Todo::class, 10)->make())->each(function($todo){
-                $todo->tasks()->saveMany(factory(TodoTask::class, 10)->make());//usa-se o make porque quem salva no banco é o saveMany()
+            $user->todos()->saveMany(factory(Todo::class, 10)->make())->each(function($todos){
+                $todos->tasks()->saveMany(factory(TodoTask::class, 10)->make());//usa-se o make porque quem salva no banco é o saveMany()
             });
         });
     }

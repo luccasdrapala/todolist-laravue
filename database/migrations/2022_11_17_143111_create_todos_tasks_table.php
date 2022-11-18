@@ -13,7 +13,7 @@ class CreateTodosTasksTable extends Migration
      */
     public function up()
     {
-        Schema::create('todos_tasks', function (Blueprint $table) {
+        Schema::create('todo_tasks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('todo_id');
             $table->foreign('todo_id')
@@ -34,6 +34,6 @@ class CreateTodosTasksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('todos_tasks');
+        Schema::dropIfExists('todo_tasks');
     }
 }
