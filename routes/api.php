@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function(){ //controle de versões
 
-    Route::post('login',[AuthController::class, 'login']); 
+    Route::post('login',[AuthController::class, 'login']);
+    Route::post('register', [AuthController::class, 'register']); 
 });
 
