@@ -5,6 +5,7 @@ use App\User;
 use App\Exceptions\LoginInvalidException;
 use App\Exceptions\UserHasBeenTaken;
 use App\Http\Requests\AuthRegisterRequest;
+use Illuminate\Support\Str;
 
 class AuthService{
 
@@ -33,14 +34,14 @@ class AuthService{
             throw new UserHasBeenTaken();
         }
 
-        $userPassword = bcrypt($password ?? string::random(10));
+        $userPassword = bcrypt($password ?? Str::random(10));
 
         $user = User::create([
             'first_name' => $first_name,
             'last_name' => $last_name,
             'email' => $email,
             'password' => $userPassword,
-            'confirmation_token' => string::random(60)
+            'confirmation_token' => Str::random(60)
         ]);
 
         return $user;
