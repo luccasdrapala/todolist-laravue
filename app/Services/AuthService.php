@@ -50,4 +50,9 @@ class AuthService{
 
         return $user;
     }
+
+    public function verifyEmail(string $token)
+    {
+        $user = User::where('confirmation_token', $token)->first();   
+    }
 }

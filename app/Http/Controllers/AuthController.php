@@ -7,6 +7,7 @@ use App\Http\Resources\UserResource;
 use App\Services\AuthService;
 use Illuminate\Http\Request;
 use Symfony\Component\Console\Input\Input;
+use App\Http\Requests\AuthVerifyEmailRequest;
 
 class AuthController extends Controller
 {   
@@ -32,5 +33,12 @@ class AuthController extends Controller
         $user = $this->authService->register($input['first_name'], $input['last_name'], $input['email'], $input['password']); 
 
         return new UserResource($user);
+    }
+
+    public function verifyEmail(AuthVerifyEmailRequest $request) 
+    {   
+        $input = $request->validated();
+
+        return $this->authService->verifyEmail($input['token']);
     }
 }
