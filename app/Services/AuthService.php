@@ -6,13 +6,15 @@ use App\Events\UserRegistered;
 use App\User;
 use App\Exceptions\LoginInvalidException;
 use App\Exceptions\UserHasBeenTaken;
+use App\Exceptions\VerifyEmailTokenInvalidException;
 use App\Http\Requests\AuthRegisterRequest;
 use Illuminate\Support\Str;
+use PhpParser\Node\Expr\Throw_;
 
 class AuthService{
 
-    public function login_user(string $email, string $password){
-
+    public function login_user(string $email, string $password)
+    {
         $login =[
             'email' => $email,
             'password' => $password
@@ -29,8 +31,8 @@ class AuthService{
         ];
     }
 
-    public function register(string $first_name, string $last_name, string $email, string $password){
-        
+    public function register(string $first_name, string $last_name, string $email, string $password)
+    {    
         $user = User::where('email', $email)->exists();
         if (!empty($user)){
             throw new UserHasBeenTaken();
@@ -43,16 +45,27 @@ class AuthService{
             'last_name' => $last_name,
             'email' => $email,
             'password' => $userPassword,
-            'confirmation_token' => Str::random(60)
+            'confirmation_token' => Str::random(60),
         ]);
 
         event(new UserRegistered($user));
-
+        
         return $user;
+        
     }
 
     public function verifyEmail(string $token)
     {
         $user = User::where('confirmation_token', $token)->first();   
+
+        if(empty($user)) {
+            throw new VerifyEmailTokenInvalidException();
+        }
+
+        $user->confirmation_token = null;
+        $user->email_verified_at = now();
+        $user->save();
+
+        return $user;
     }
 }

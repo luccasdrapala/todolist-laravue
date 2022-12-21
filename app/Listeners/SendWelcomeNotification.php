@@ -29,5 +29,6 @@ class SendWelcomeNotification
     public function handle(UserRegistered $event)
     {   
         Mail::to($event->user->email)->send(new WelcomeMail($event->user));
+
     }
 }

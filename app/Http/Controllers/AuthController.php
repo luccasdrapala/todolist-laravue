@@ -39,6 +39,8 @@ class AuthController extends Controller
     {   
         $input = $request->validated();
 
-        return $this->authService->verifyEmail($input['token']);
+        $user = $this->authService->verifyEmail($input['token']);
+
+        return new UserResource($user);
     }
 }
